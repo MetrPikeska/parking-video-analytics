@@ -17,11 +17,11 @@ def main():
     input_dir.mkdir(exist_ok=True)
     output_dir.mkdir(exist_ok=True)
     
-    # Find first MP4 file in input directory
-    video_files = list(input_dir.glob("*.mp4"))
+    # Find first video file in input directory
+    video_files = list(input_dir.glob("*.[mM][pP]4")) + list(input_dir.glob("*.[aA][vV][iI]")) + list(input_dir.glob("*.[mM][oO][vV]")) + list(input_dir.glob("*.[mM][kK][vV]"))
     
     if not video_files:
-        print("❌ Žádné MP4 video nenalezeno ve složce 'input/'")
+        print("❌ Žádné video nenalezeno ve složce 'input/'")
         print("Umístěte video soubor do složky 'backend/input/'")
         return
     
@@ -45,7 +45,7 @@ def main():
     processor.process_video(
         input_path=str(input_video),
         output_path=str(output_video),
-        confidence=0.2,
+        confidence=0.5,  # Vyšší confidence pro lepší detekci aut
         fps_sampling=1,  # Analyze every frame (change to 2-5 for faster processing)
         roi=None,  # No ROI filter (analyze whole frame)
         progress_callback=show_progress

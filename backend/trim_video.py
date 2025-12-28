@@ -85,30 +85,32 @@ def trim_video(input_path: str, output_path: str, duration_seconds: int = 30):
 
 
 def main():
-    """Process video from input folder"""
+    """Process video from to_trim folder"""
     
-    input_dir = Path("input")
-    output_dir = Path("output")
+    input_dir = Path("to_trim")
+    output_dir = Path("input")  # Output goes to input folder for processing
     
     # Create directories
     input_dir.mkdir(exist_ok=True)
     output_dir.mkdir(exist_ok=True)
     
-    # Find first MP4 file
-    video_files = list(input_dir.glob("*.mp4"))
+    # Find first video file (MP4, AVI, MOV, MKV)
+    video_files = list(input_dir.glob("*.[mM][pP]4")) + list(input_dir.glob("*.[aA][vV][iI]")) + list(input_dir.glob("*.[mM][oO][vV]")) + list(input_dir.glob("*.[mM][kK][vV]"))
     
     if not video_files:
-        print("❌ Žádné MP4 video nenalezeno ve složce 'input/'")
+        print("❌ Žádné video nenalezeno ve složce 'to_trim/'")
+        print("Podporované formáty: MP4, AVI, MOV, MKV")
+        print("\nUmístěte dlouhé video do složky 'backend/to_trim/'")
         return
     
     input_video = video_files[0]
-    output_video = output_dir / f"{input_video.stem}_2min.mp4"
+    output_video = output_dir / f"{input_video.stem}_1min.mp4"
     
-    # Trim to 2 minutes (120 seconds)
+    # Trim to 1 minute (60 seconds)
     trim_video(
         input_path=str(input_video),
         output_path=str(output_video),
-        duration_seconds=120  # 2 minutes
+        duration_seconds=60  # 1 minute
     )
 
 

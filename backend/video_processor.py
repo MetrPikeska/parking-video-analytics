@@ -14,10 +14,7 @@ class VideoProcessor:
     """Process video and create output with detections overlay"""
     
     VEHICLE_CLASSES = {
-        2: "car",
-        3: "motorcycle", 
-        5: "bus",
-        7: "truck"
+        2: "car"  # Pouze auta
     }
     
     def __init__(self, model_name: str = "yolov8n.pt"):
